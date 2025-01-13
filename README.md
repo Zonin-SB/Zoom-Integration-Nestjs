@@ -46,10 +46,7 @@ To run this backend application, you'll need to set up your own environment vari
 
 After configuring the environment variables in your `.env` file at the root of the project, you can install the dependencies using:
 
-```bash
 pnpm install
-
-## Run&nbsp;Client&nbsp;Side
 
 Now you can run by  pnpm start:dev in the terminal and the code start working.
 
