@@ -48,3 +48,11 @@ After configuring the environment variables in your `.env` file at the root of t
 
 ```bash
 pnpm install
+
+## Run&nbsp;Client&nbsp;Side
+
+Now you can run by  pnpm start:dev in the terminal and the code start working.
+
+## Copyright
+
+Copyright 2023 © [Zonin-SB](https://github.com/Zonin-SB)
