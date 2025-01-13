@@ -1,10 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-// import base64 from 'base-64';
 import * as base64 from 'base-64';
 import KJUR from 'jsrsasign';
 import axios from 'axios';
-import zoomConfig from '../config/settings/zoom.config';
 import {
   ZoomMeetingRecordingsResponse,
   ZoomMeetingUserRecordingsResponse,
@@ -17,7 +15,6 @@ export class ZoomSDKService {
 
   constructor(private configService: ConfigService) {
     this.zoomConfig = this.configService.get('zoom');
-    console.log(zoomConfig, 'zoomConfig');
   }
 
   private async getAuthHeaders(): Promise<Record<string, string>> {
@@ -57,7 +54,7 @@ export class ZoomSDKService {
       this.logger.log('Zoom access token generated successfully');
       return access_token;
     } catch (error) {
-      console.log('generateZoomAccessToken Error --> ', error);
+      this.logger.error('generateZoomAccessToken Error --> ', error);
       throw error;
     }
   }
@@ -147,12 +144,7 @@ export class ZoomSDKService {
           Authorization: `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
-        // params: {
-        //   page_size: 30, // Adjust as needed
-        //   from: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(), // Last 30 days
-        // },
       });
-      console.log(response, 'response');
       return response.data;
     } catch (error) {
       this.logger.error(
@@ -183,7 +175,6 @@ export class ZoomSDKService {
             new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(), // Default to last 30 days if from is not provided
         },
       });
-      console.log(response, 'response');
       return response.data;
     } catch (error) {
       this.logger.error('Error listing Zoom recordings', error.stack);

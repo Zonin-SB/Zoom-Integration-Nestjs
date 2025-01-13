@@ -26,7 +26,6 @@ export class ZoomService {
     } = createMeetingDto;
 
     const accessToken = await this.zoomService.generateO2AuthJwtToken();
-    console.log(accessToken, 'accessToken');
     const meetingConfig = {
       topic: topic,
       type: 2, //  for scheduled meeting
@@ -77,27 +76,12 @@ export class ZoomService {
   ): Promise<ZoomMeetingRecordingsResponse> {
     const { meetingId } = getMeetingRecordingsDto;
     try {
-      console.log(meetingId, 'meetingId');
       const accessToken = await this.zoomService.generateO2AuthJwtToken();
-      console.log(accessToken, 'accessToken');
 
       const recordings = await this.zoomService.getMeetingRecordings(
         meetingId,
         accessToken,
       );
-      // const response = await axios.get(
-      //   `${this.ZOOM_API_BASE_URL}/users/${userId}/recordings`,
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${process.env.ZOOM_JWT_TOKEN}`,
-      //       'Content-Type': 'application/json',
-      //     },
-      //     params: {
-      //       page_size: 30, // Adjust as needed
-      //       from: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(), // Last 30 days
-      //     },
-      //   },
-      // );
 
       return recordings;
     } catch (error) {
@@ -110,9 +94,7 @@ export class ZoomService {
   ): Promise<ZoomMeetingUserRecordingsResponse> {
     const { userId, from } = listRecordingsDto;
     try {
-      console.log(userId, 'userId');
       const accessToken = await this.zoomService.generateO2AuthJwtToken();
-      console.log(accessToken, 'accessToken');
 
       const recordings = await this.zoomService.listRecordings(
         userId,
