@@ -15,7 +15,7 @@ This is a **Zoom Integration** project built using **NestJS**. It allows you to 
 
 The application is designed to manage Zoom meeting creation, fetching recordings, and listing those recordings.
 
-> **Note:** Please read the "Run" sections before opening an issue.
+> **Note:** Please read the "Run" sections before opening an issue.  
 > **Warning:** This project is still in development and may not be fully stable for production environments.
 
 ## Technology
