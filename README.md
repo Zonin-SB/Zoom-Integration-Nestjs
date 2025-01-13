@@ -37,19 +37,20 @@ The application is built with:
 
 To run this backend application, you'll need to set up your own environment variables. The required variables include:
 
-- **ZOOM_CLIENT_ID**: Your Zoom client ID (string).
-- **ZOOM_CLIENT_SECRET**: Your Zoom client secret (string).
-- **ZOOM_ACCOUNT_ID**: Your Zoom account ID (string).
-- **ZOOM_SDK_CLIENT_ID**: Your Zoom SDK client ID (string).
-- **ZOOM_SDK_CLIENT_SECRET**: Your Zoom SDK client secret (string).
-- **PORT**: The port number for your application (string).
+- **ZOOM_CLIENT_ID**: Your Zoom client ID of Server to Server OAuth App (string).
+- **ZOOM_CLIENT_SECRET**: Your Zoom client secret of Server to Server OAuth App (string).
+- **ZOOM_ACCOUNT_ID**: Your Zoom account ID of Server to Server OAuth App (string).
+- **ZOOM_SDK_CLIENT_ID**: Your Zoom SDK client ID of General App (string).
+- **ZOOM_SDK_CLIENT_SECRET**: Your Zoom SDK client secret of General App (string).
 
 After configuring the environment variables in your `.env` file at the root of the project, you can install the dependencies using:
 
 pnpm install
 
-Now you can run by  pnpm start:dev in the terminal and the code start working.
+Now you can run the project by using the command
+
+pnpm start:dev
 
 ## Copyright
 
-Copyright 2023 © [Zonin-SB](https://github.com/Zonin-SB)
+Copyright 2025 © [Zonin-SB](https://github.com/Zonin-SB)
