@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as base64 from 'base-64';
-import KJUR from 'jsrsasign';
+import * as KJUR from 'jsrsasign';
 import axios from 'axios';
 import {
   ZoomMeetingRecordingsResponse,
@@ -113,7 +113,6 @@ export class ZoomSDKService {
           'Content-Type': 'application/json',
         },
       });
-
       if (response.status === 201) {
         const meetingId = response.data.id; // Extract meeting ID from the response
         this.logger.log(
@@ -132,12 +131,44 @@ export class ZoomSDKService {
     }
   }
 
-  public async getMeetingRecordings(
+  public async updateZoomMeeting(
+    meetingId: string, // ID of the meeting to be updated
+    updatedMeetingConfig: Record<string, any>, // The new meeting configuration
+    accessToken: string, // The OAuth token to authorize the request
+  ): Promise<string> {
+    try {
+      const url = `https://api.zoom.us/v2/meetings/${meetingId}`;
+
+      // Sending a PUT request to update the meeting details
+      const response = await axios.patch(url, updatedMeetingConfig, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      if (response.status === 204) {
+        this.logger.log(
+          `Zoom meeting with ID ${meetingId} updated successfully`,
+        );
+        return meetingId; // Return the updated meeting ID
+      } else {
+        this.logger.error(
+          `Unexpected response status: ${response.status} - ${response.statusText}`,
+        );
+        throw new Error('Failed to update Zoom meeting');
+      }
+    } catch (error) {
+      this.logger.error('Error updating Zoom meeting', error.stack);
+      throw error;
+    }
+  }
+
+  public async getMeetingDetails(
     meetingId: string,
     accessToken: string,
   ): Promise<ZoomMeetingRecordingsResponse> {
     try {
-      const url = `https://api.zoom.us/v2/meetings/${meetingId}/recordings`;
+      const url = `https://api.zoom.us/v2/meetings/${meetingId}`;
 
       const response = await axios.get(url, {
         headers: {
@@ -149,6 +180,58 @@ export class ZoomSDKService {
     } catch (error) {
       this.logger.error(
         'Error retrieving Zoom meeting recordings',
+        error.stack,
+      );
+      throw error;
+    }
+  }
+
+  public async getMeetingRecordings(
+    meetingId: string,
+    accessToken: string,
+  ): Promise<ZoomMeetingRecordingsResponse> {
+    try {
+      const url = `https://api.zoom.us/v2/meetings/${meetingId}/recordings`;
+      console.log(url);
+
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      this.logger.error(
+        'Error retrieving Zoom meeting recordings',
+        error.stack,
+      );
+      throw error;
+    }
+  }
+
+  public async getMeetingRecordingsInstances(
+    meetingId: string,
+    accessToken: string,
+  ): Promise<ZoomMeetingRecordingsResponse> {
+    try {
+      const url = `https://api.zoom.us/v2/past_meetings/${meetingId}/instances`;
+      console.log(url);
+
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      this.logger.error(
+        'Error retrieving Zoom meeting recordings instances',
         error.stack,
       );
       throw error;
